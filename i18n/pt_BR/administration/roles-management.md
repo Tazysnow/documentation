@@ -1,105 +1,105 @@
-# Roles Management
+# Gerenciamento de Funções
 
 ## Panorama
 
-In order to restrict access for some users you need to use Roles. Administrator can manage roles in Administration panel. Each role defines an access to certain areas (scopes) which is applied to users who own that role.
+Para restringir o acesso de alguns usuários, você precisa usar as Funções. O administrador pode gerenciar as funções no painel de administração. Cara função define um acesso a certas áreas (escopo) que é aplicada a usuários que possuem aquela função.
 
-One user can have multiple roles. Those roles can be selected for a specific user (‘Roles’ field in User entry) and/or be inherited from the teams that user belongs to.
+Um usuário pode ter várias funções. Essas funções podem ser selecionadas para um usuário em específico (campo 'Funções' na entidade Usuário) e/ou ser herdada de times que o usuário faz parte.
 
-If a user has multiple roles then they will be merged so that permissive rule will have a higher priority. That allows administrator to manage access level control easily and flexibly.
+Se um usuário tem várias funções, elas serão unidas de forma que as regras permissivas tenham maior prioridade. Isso permite ao administrador gerenciar o controle do nível de acesso facilmente e flexivelmente.
 
-It's possible to see what permissions is applied to a certain user by clicking 'Access' button on the user's detail view.
+É possível ver o quais permissões estão aplicadas a certos usuários ao clicar no botão 'Acesso' na vista detalhada do usuário.
 
 ![1](../_static/images/administration/roles-management/scope-level.png)
 
-## Example
+## Exemplo
 
-For example, user belongs to team ‘Sales’. That team has single role ‘Salesman’. So all users from this team will obtain ‘Salesman’ role.
+Por exemplo, o usuário pertence ao time 'Vendas'. Esse time tem uma única função 'Vendedor'. Então todos os usuários desse time obterão a função 'Vendedor'.
 
-‘Salesman’ role is defined the following way:
+A função 'Vendedor' está definida da seguinte forma:
 
-Lead:
+Condução:
 ```
-create - yes
-read – team
-edit – own
-delete – no
-stream - team
-```
-
-Opportunity:
-```
-create - yes
-read – team
-edit – own
-delete – no
-stream - team
+criar - sim
+ler – time
+editar – próprio
+apagar – não
+transmitir - time
 ```
 
-Users will be able to read only those leads and opportunities which belong to ‘Sales Department’ team (‘Teams’ field).
-User will be able to edit only those leads and opportunities which they are assigned to or those they have created.
-Users won’t be able to remove any leads or opportunities.
-
-We want to give more rights to a certain user who holds sales manager position in the company. This employee must have an ability to read/edit/delete all records from ‘Sales’ team. The user should belong to our ‘Sales’ team. But we need to create the new role ‘Sales Manager’ and select this role for that user in ‘Roles’ field.
-
-‘Sales Manager’ role is defined the following way:
-
-Lead:
+Oportunidade:
 ```
-create - yes
-read – team
-edit – team
-delete – team
-stream - team
+criar - sim
+ler – time
+editar – próprio
+apagar – não
+transmitir - time
 ```
 
-Opportunity:
+Os usuários irão ser capazes de ler somente as conduções e oportunidade que pertencem ao time 'Departamento de Vendas' (campo 'Times').
+O usuário será capaz de editar somente aquelas conduções e oportunidades que eles são designados ou aqueles que eles criaram.
+Os usuários não serão capazes de remover quaisquer conduções ou oportunidades.
+
+Nós querendo dar mais direitos para certo usuário que está no cargo de gerente de vendas na companhia. Esse empregado deve ter uma capacidade de ler/editar/apagar todos os registros do time 'Vendas'. O usuário deveria pertencer ao nosso time 'Vendas'. Mas nós precisamos criar uma nova função 'Gerente de Vendas' e selecionar essa função para aquele usuário no campo 'Funções'.
+
+A função 'Gerente de Vendas' está definida da seguinte forma:
+
+Condução:
 ```
-create - yes
-read – team
-edit – team
-delete – team
-stream - team
+criar - sim
+ler – time
+editar – time
+apagar – time
+transmitir - time
 ```
 
-Our user will be able to manager all leads and opportunities from the ‘Sales’ team.
+Oportunidade:
+```
+criar - sim
+ler – time
+editar – time
+apagar – time
+transmitir - time
+```
 
-## Special Permissions
+Nosso usuário será capaz de gerenciar todas as conduções e oportunidades do time 'Vendas'.
 
-### Assignment Permission
+## Permissões Especiais
 
-Set this parameter to restrict ability to re-assign records to another user and/or teams. If you set `team` - then it will be possible to assign only to users from own team(s). If `no` - users won't be able to re-assign at all.
+### Atribuição de Permissões
 
-It also defines whether user is able to post to stream of another users/teams.
+Defina esse parâmetro para restringir a habilidade de reatribuir registros para outro usuário e/ou times. Se você definir 'time' - então será possível atribuir somente a usuários do próprio time(s). Se 'não' - os usuários não serão capazes de reatribuir de qualquer forma.
 
-### User Permission
+Isso também define se o usuário é capaz de transmitir uma publicação para outros usuários/times.
 
-Allows to restrict an ability for users to view activities, calendar and stream of other users.
+### Permissões de Usuários
 
-### Portal Permission
+Permite restringir uma capacidade do usuário de ver atividades, calendário e transmissões de outros usuários.
 
-Defines an access to portal information, ability to post messages to portal users.
+### Permissão de Portal
 
-### Group Email Account Permission
+Define um acesso para a informação portal, capacidade de publicar mensagens para usuários do portal.
 
-Defines an access to group email accounts, an ability to send emails from group SMTP.
+### Permissão para a Conta de Email do Grupo
 
-### Export Permission
+Define um acesso para as contas de email do grupo, uma capacidade de enviar emails do SMTP do grupo.
 
-Defenies whether user have an ability to export records. (since version 4.9.0)
+### Exportar Permissão
 
-## Permissions by Default 
+Define se o usuário tem uma capacidade de exportar registros. (desde a versão 4.9.0)
 
-By default (if there are no any applied) users can read and edit all records. But can't delete any ones except those they have created and they are assigned to at the same time.
+## Permissões Padrões 
 
-There is an ability to restrict an access applied by default by enabling 'ACL Strict Mode' at Administration > Settings.
+Por padrão (se não houver qualquer uma aplicada), os usuários podem ler e editar todos os registros. Mas não podem apagar nenhum deles, exceto aqueles que eles mesmos criaram e são atribuídos a eles ao mesmo tempo.
 
-## Field Level Security
+Existe uma capacidade de restringir um acesso aplicado por padrão ao habilitar o 'Modo Estrito ACL' em Administração > Configurações.
 
-Allows to control an access for a specific fields.
+## Segurança ao Nível do Campo
 
-By default user can read all fields if one can read the record. User can edit any field if one can edit the record. You can restrict access to specific fields using Field Level Security.
+Permite controlar um acesso para campos específicos.
 
-In edit view  of a role record in Field Level section click plus icon next to the specific scope then select needed field. Then you will be able to specify the access level for `read` and `edit` actions. There are to options: `yes` and `no`.
+Por padrão, o usuário pode ler todos os campos se ele puder ler o registro. O usuário pode editar qualquer campo se ele puder editar o registro. Você pode restringir o acesso a campos específicos usando a Segurança ao Nível do Campo.
+
+Na visualização da edição de um registro de função na sessão Nível do Campo, clique no ícone 'mais' próximo ao escopo específico, então selecione o campo desejado. Então você será capaz de especificar o nível de acesso para as ações 'ler' e 'editar'. Há duas opções: 'sim' e 'não'.
 
 ![2](../_static/images/administration/roles-management/field-level-secutiry.png)
